@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Guangzhou Bus Ticketing</string>
+    <string name="brand_slogan">Your journey. Our priority. Delivered with care.</string>
+    <string name="home_title">Welcome to Guangzhou Bus Ticketing</string>
+    <string name="from_hint">From</string>
+    <string name="to_hint">To</string>
+    <string name="date_hint">Travel date</string>
+    <string name="search_button">Search Trips</string>
+    <string name="payment_title">Payment Options</string>
+    <string name="mobile_money">Mobile Money</string>
+    <string name="cash_on_board">Cash on Board</string>
+    <string name="card_payment">Card</string>
+    <string name="support_title">Support &amp; Contact</string>
+    <string name="location_label">Mzumbe University</string>
+    <string name="support_phone_1">+255757817461</string>
+    <string name="support_phone_2">+255769281862</string>
+    <string name="support_phone_3">+255782264666</string>
+    <string name="recent_routes">Popular routes</string>
+    <string name="route_one">Dar es Salaam → Morogoro</string>
+    <string name="route_two">Arusha → Moshi</string>
+    <string name="route_three">Dodoma → Mbeya</string>
+</resources>
