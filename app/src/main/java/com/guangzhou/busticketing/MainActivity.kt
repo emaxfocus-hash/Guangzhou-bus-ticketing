@@ -15,6 +15,7 @@ class MainActivity : AppCompatActivity() {
         val fromInput = findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.fromInput)
         val toInput = findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.toInput)
         val searchButton = findViewById<Button>(R.id.searchButton)
+        val bookingHistoryButton = findViewById<Button>(R.id.bookingHistoryButton)
 
         fromInput.setText("Dar es Salaam")
         toInput.setText("Morogoro")
@@ -23,6 +24,11 @@ class MainActivity : AppCompatActivity() {
             val from = fromInput.text?.toString()?.trim().takeIf { it?.isNotEmpty() == true } ?: "Dar es Salaam"
             val to = toInput.text?.toString()?.trim().takeIf { it?.isNotEmpty() == true } ?: "Morogoro"
             startRouteSearch(from, to)
+        }
+
+        bookingHistoryButton.setOnClickListener {
+            val intent = Intent(this, BookingHistoryActivity::class.java)
+            startActivity(intent)
         }
 
         val popularRoutes = TanzaniaRoutes.getPopularRoutes()
