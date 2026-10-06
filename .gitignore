@@ -1,0 +1,19 @@
+# Ignore local keystores and local IDE files
+
+# Keystores
+*.jks
+*.keystore
+keystore.jks
+my-release-key.jks
+
+# Local properties and IDE files
+local.properties
+.idea/
+*.iml
+
+# Gradle
+.gradle/
+/build/
+
+# Mac
+.DS_Store
