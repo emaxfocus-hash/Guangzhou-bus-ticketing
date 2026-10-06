@@ -24,6 +24,7 @@ class BookingHistoryActivity : AppCompatActivity() {
             val details = card.findViewById<android.widget.TextView>(R.id.bookingDetails)
             val payment = card.findViewById<android.widget.TextView>(R.id.bookingPayment)
             val date = card.findViewById<android.widget.TextView>(R.id.bookingDate)
+            val cancelButton = card.findViewById<Button>(R.id.cancelBookingButton)
 
             code.text = booking.code
             route.text = booking.route
@@ -31,12 +32,16 @@ class BookingHistoryActivity : AppCompatActivity() {
             payment.text = booking.payment
             date.text = booking.date
 
+            cancelButton.setOnClickListener {
+                val intent = Intent(this, CancelTicketActivity::class.java)
+                intent.putExtra("booking_code", booking.code)
+                startActivity(intent)
+            }
+
             historyContainer.addView(card)
         }
 
-        findViewById<Button>(R.id.backButton).setOnClickListener {
-            finish()
-        }
+        findViewById<Button>(R.id.backButton).setOnClickListener { finish() }
     }
 
     data class BookingItem(

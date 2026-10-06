@@ -47,4 +47,12 @@
         android:layout_marginTop="4dp"
         android:text="2026-10-06"
         android:textColor="@color/text_secondary" />
+
+    <Button
+        android:id="@+id/cancelBookingButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/accent_orange"
+        android:text="Cancel Booking" />
 </LinearLayout>
