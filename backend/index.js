@@ -7,6 +7,11 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
+const cities = [
+  'Dar es Salaam', 'Morogoro', 'Dodoma', 'Arusha', 'Moshi', 'Mbeya', 'Tanga',
+  'Zanzibar', 'Mwanza', 'Kigoma', 'Iringa', 'Songea', 'Tabora', 'Bukoba', 'Shinyanga', 'Lindi'
+];
+
 const routeCatalog = [
   { from: 'Dar es Salaam', to: 'Morogoro', operator: 'Dala 94 Express', departure: '08:00 AM', price: 32000, seats: 12 },
   { from: 'Dar es Salaam', to: 'Morogoro', operator: 'Gani Bus', departure: '10:30 AM', price: 35000, seats: 7 },
@@ -29,36 +34,24 @@ const routeCatalog = [
   { from: 'Lindi', to: 'Dar es Salaam', operator: 'Coastway', departure: '06:50 AM', price: 29000, seats: 15 }
 ];
 
-const cities = [
-  'Dar es Salaam', 'Morogoro', 'Dodoma', 'Arusha', 'Moshi', 'Mbeya', 'Tanga',
-  'Zanzibar', 'Mwanza', 'Kigoma', 'Iringa', 'Songea', 'Tabora', 'Bukoba', 'Shinyanga', 'Lindi'
-];
-
 const payments = {};
 
-app.get('/cities', (req, res) => {
-  res.json(cities);
-});
+app.get('/cities', (req, res) => res.json(cities));
 
 app.get('/routes', (req, res) => {
   const { from, to } = req.query;
-  if (!from && !to) return res.json(routeCatalog);
-
   const filtered = routeCatalog.filter(route => {
     const fromMatch = !from || route.from.toLowerCase().includes(String(from).toLowerCase());
     const toMatch = !to || route.to.toLowerCase().includes(String(to).toLowerCase());
     return fromMatch && toMatch;
   });
-
   res.json(filtered);
 });
 
 app.post('/payments/start', (req, res) => {
   const payment_id = uuidv4();
   payments[payment_id] = { status: 'pending', ...req.body };
-  setTimeout(() => {
-    payments[payment_id].status = 'paid';
-  }, 5000);
+  setTimeout(() => { payments[payment_id].status = 'paid'; }, 5000);
   res.json({ payment_id, status: 'pending' });
 });
 
@@ -69,4 +62,4 @@ app.get('/payments/:id/status', (req, res) => {
 });
 
 const port = process.env.PORT || 3000;
-app.listen(port, () => console.log('Tanzania route backend listening on', port));
+app.listen(port, () => console.log('Tanzania route backend ready on', port));

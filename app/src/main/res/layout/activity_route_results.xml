@@ -16,10 +16,20 @@
             android:id="@+id/routeTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="14dp"
+            android:layout_marginBottom="8dp"
             android:text="Available trips"
             android:textColor="@color/text_primary"
             android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/regionLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="14dp"
+            android:text="Regional coverage"
+            android:textColor="@color/primary_dark"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
         <LinearLayout

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import com.guangzhou.busticketing.data.TanzaniaRegions
 import com.guangzhou.busticketing.data.TanzaniaRoutes
 
 class RouteResultsActivity : AppCompatActivity() {
@@ -16,6 +17,9 @@ class RouteResultsActivity : AppCompatActivity() {
 
         val routeTitle = findViewById<android.widget.TextView>(R.id.routeTitle)
         routeTitle.text = "Trips from $from to $to"
+
+        val regionLabel = findViewById<android.widget.TextView>(R.id.regionLabel)
+        regionLabel.text = "Regional coverage: ${TanzaniaRegions.regionFor(from)} → ${TanzaniaRegions.regionFor(to)}"
 
         val resultsContainer = findViewById<android.widget.LinearLayout>(R.id.routeResultsContainer)
         val routeMatches = TanzaniaRoutes.getRoutesFor(from, to).ifEmpty {
@@ -34,7 +38,7 @@ class RouteResultsActivity : AppCompatActivity() {
             val bookButton = card.findViewById<Button>(R.id.tripBookButton)
 
             title.text = "${route.from} → ${route.to} • ${route.operator}"
-            details.text = "Departure: ${route.departure} • Seats available: ${route.seats} • Price: TSh ${route.price}"
+            details.text = "Departure: ${route.departure} • Seats: ${route.seats} • Price: TSh ${route.price}"
 
             bookButton.setOnClickListener {
                 val intent = Intent(this, SeatSelectionActivity::class.java)
