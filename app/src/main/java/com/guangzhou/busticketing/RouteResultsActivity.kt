@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import com.guangzhou.busticketing.data.TanzaniaRoutes
 
 class RouteResultsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,20 +17,42 @@ class RouteResultsActivity : AppCompatActivity() {
         val routeTitle = findViewById<android.widget.TextView>(R.id.routeTitle)
         routeTitle.text = "Trips from $from to $to"
 
-        val bookingButton1 = findViewById<Button>(R.id.routeBookButton1)
-        val bookingButton2 = findViewById<Button>(R.id.routeBookButton2)
-        val bookingButton3 = findViewById<Button>(R.id.routeBookButton3)
-
-        val openSeatSelection: (String) -> Unit = { route ->
-            val intent = Intent(this, SeatSelectionActivity::class.java)
-            intent.putExtra("route_name", route)
-            intent.putExtra("from", from)
-            intent.putExtra("to", to)
-            startActivity(intent)
+        val resultsContainer = findViewById<android.widget.LinearLayout>(R.id.routeResultsContainer)
+        val routeMatches = TanzaniaRoutes.getRoutesFor(from, to).ifEmpty {
+            listOf(
+                TanzaniaRoutes.Route(from, to, "National Express", "09:00 AM", 41000, 5),
+                TanzaniaRoutes.Route(from, to, "City Transit", "12:30 PM", 47000, 6)
+            )
         }
 
-        bookingButton1.setOnClickListener { openSeatSelection("Dar es Salaam → Morogoro • Dala 94 Express") }
-        bookingButton2.setOnClickListener { openSeatSelection("Dar es Salaam → Morogoro • Gani Bus") }
-        bookingButton3.setOnClickListener { openSeatSelection("Dar es Salaam → Morogoro • Safari Coach") }
+        resultsContainer.removeAllViews()
+
+        routeMatches.forEachIndexed { index, route ->
+            val card = layoutInflater.inflate(R.layout.item_trip_card, resultsContainer, false)
+            val title = card.findViewById<android.widget.TextView>(R.id.tripTitle)
+            val details = card.findViewById<android.widget.TextView>(R.id.tripDetails)
+            val bookButton = card.findViewById<Button>(R.id.tripBookButton)
+
+            title.text = "${route.from} → ${route.to} • ${route.operator}"
+            details.text = "Departure: ${route.departure} • Seats available: ${route.seats} • Price: TSh ${route.price}"
+
+            bookButton.setOnClickListener {
+                val intent = Intent(this, SeatSelectionActivity::class.java)
+                intent.putExtra("route_name", "${route.from} → ${route.to} • ${route.operator}")
+                intent.putExtra("from", route.from)
+                intent.putExtra("to", route.to)
+                startActivity(intent)
+            }
+
+            resultsContainer.addView(card)
+            if (index < routeMatches.lastIndex) {
+                val spacing = android.widget.LinearLayout.LayoutParams(
+                    android.widget.LinearLayout.LayoutParams.MATCH_PARENT,
+                    android.widget.LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+                spacing.setMargins(0, 0, 0, 16)
+                card.layoutParams = spacing
+            }
+        }
     }
 }
