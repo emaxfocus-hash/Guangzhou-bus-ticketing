@@ -20,6 +20,16 @@ class BookingConfirmationActivity : AppCompatActivity() {
         findViewById<android.widget.TextView>(R.id.confirmationPaymentText).text = "Payment: $paymentMethod"
         findViewById<android.widget.TextView>(R.id.confirmationCodeText).text = "Booking code: $bookingCode"
 
+        val viewTicketButton = findViewById<Button>(R.id.viewTicketButton)
+        viewTicketButton.setOnClickListener {
+            val intent = Intent(this, QrTicketActivity::class.java)
+            intent.putExtra("route_name", routeName)
+            intent.putExtra("selected_seats", selectedSeats)
+            intent.putExtra("payment_method", paymentMethod)
+            intent.putExtra("booking_code", bookingCode)
+            startActivity(intent)
+        }
+
         findViewById<Button>(R.id.backToHomeButton).setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
